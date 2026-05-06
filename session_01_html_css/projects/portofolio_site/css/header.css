@@ -2,7 +2,7 @@ header{
     background-color: aliceblue;
     color: solid black;
     z-index: 999;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: Arial, sans-serif;
     text-align: center;
     justify-content: space-between;
     display: flex;}
@@ -23,6 +23,7 @@ nav ul li{
 nav ul li a {
     text-decoration: none;
     color: solid black; 
+    font-family: Arial, sans-serif;
 }
 
 a:hover{

@@ -1,0 +1,33 @@
+.hero {
+    background-image: linear-gradient(to right, cyan, violet);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    color: aliceblue;
+}
+
+.hero h1 {
+    font-size: 60px;
+    margin-bottom: 30px;
+}
+
+.hero p {
+    font-size: 25px;
+    margin: 0;
+    color: aliceblue;
+    font-family: 'Times New Roman', serif;
+}
+
+.cta-button {
+    margin-top: 60px;
+    padding: 10px;
+    background-color : orangered;
+    color: white;
+    text-decoration:dotted;
+    border-radius: 5px;
+    font-size: 18px;
+}
