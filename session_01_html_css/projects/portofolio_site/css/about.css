@@ -1,4 +1,4 @@
-.about-grid {
+.about{
     display: grid;
     grid-template-columns: 1fr 1.5fr;
     gap: 5rem;
@@ -23,7 +23,7 @@ img{
     color: solid black;
 }
 
-.about-content{
+.about-me{
     padding:80px;
     margin-top: 50px;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
