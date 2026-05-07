@@ -1,0 +1,35 @@
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 5rem;
+    align-items: center;
+}
+
+img{
+    border-radius: 50%;
+    border: 7px solid turquoise;
+}
+
+.about-image{
+    padding-top: 50px;
+    float:left;
+    padding-right: 300px;
+    padding-left: 50px;
+    size: 10rem;
+}
+
+.lead{
+    font-family: Arial, Helvetica, sans-serif;
+    color: solid black;
+}
+
+.about-content{
+    padding:80px;
+    margin-top: 50px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 150%;
+}
+
+@media (max-width: 768px) {
+    .about-grid { grid-template-columns: 1fr; }
+}
