@@ -34,8 +34,8 @@
 }
 
 section h2{
-    font-size: 500%;
+    font-size: 300%;
     font-family: 'Poppins', sans-serif;
-    text-align: left;
+    align-content: center;
     margin-bottom: 20px;
 }

@@ -40,3 +40,8 @@
     align-self: right;
 }
 
+@media (max-width: 768px) {
+    .skill-grid { grid-template-columns: 1fr; }
+    .skill-bar{width:60%}
+}
+
