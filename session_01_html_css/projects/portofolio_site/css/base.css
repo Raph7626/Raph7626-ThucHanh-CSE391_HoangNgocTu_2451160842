@@ -8,6 +8,7 @@
     text-align: center;
     font-family: 'Arial', sans-serif;
     color: aliceblue;
+    margin-bottom: 50px;
 }
 
 .hero h1 {
@@ -30,4 +31,11 @@
     text-decoration:dotted;
     border-radius: 5px;
     font-size: 18px;
+}
+
+section h2{
+    font-size: 500%;
+    font-family: 'Poppins', sans-serif;
+    text-align: left;
+    margin-bottom: 20px;
 }
