@@ -1,3 +1,13 @@
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+
+.about-section {
+    padding: 5rem 2rem;
+}
+
 .about{
     display: grid;
     grid-template-columns: 1fr 1.5fr;
@@ -5,16 +15,14 @@
     align-items: center;
 }
 
-img{
+.about-image img{
     border-radius: 50%;
-    border: 7px solid turquoise;
     width: 400px;
     height: 400px;
 }
 
 .about-image{
     float:left;
-    padding-left: 3rem;
     size: 10rem;
 }
 
@@ -26,8 +34,6 @@ img{
 }
 
 .about-me{
-    padding:50px;
-    margin-top: 50px;
     font-family: 'Poppins', sans-serif;
 }
 
