@@ -1,3 +1,8 @@
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
 .hero {
     background-image: linear-gradient(to right, cyan, violet);
     min-height: 100vh;
