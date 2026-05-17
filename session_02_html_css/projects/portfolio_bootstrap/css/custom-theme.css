@@ -1,0 +1,8 @@
+:root {
+    --bs-primary: #14b8a6;
+    --bs-primary-hover: #0d9488;
+    --bs-primary-rgb: 20, 184, 166;
+    
+    --bs-link-color: #14b8a6;
+    --bs-link-hover-color: #0d9488;
+}
