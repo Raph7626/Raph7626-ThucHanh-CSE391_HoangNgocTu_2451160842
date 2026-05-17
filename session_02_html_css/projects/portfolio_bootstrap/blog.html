@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - DevPortfolio</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom Theme -->
+    <link href="css/custom-theme.css" rel="stylesheet">
+    <!-- Blog CSS -->
+    <link href="css/blog.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/comments.css">
+    <link rel="stylesheet" href="css/custom-theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <section id="blog" class="py-5">
+        <div class="container">
+            <div class="row">
+                <!-- Main Content (8 columns) -->
+                <div class="col-lg-8">
+                    <!-- Blog Post Card 1 -->
+                    <article class="card mb-4 overflow-hidden">
+                        <img src="https://st.quantrimang.com/photos/image/2022/06/15/bootstrap5-700.jpg"
+                            class="card-img-top blog-post-img" alt="Blog 1">
+                        <div class="card-body p-4">
+                            <span class="badge bg-primary mb-2">Technology</span>
+                            <h2 class="card-title fw-bold">Hành trình xây dựng Portfolio với Bootstrap 5</h2>
+                            <p class="card-text text-muted">
+                                <small><i class="bi bi-person"></i> By Cao Thanh Tùng • <i class="bi bi-calendar"></i>
+                                    Jan 15,
+                                    2026 • <i class="bi bi-clock"></i> 5 min read</small>
+                            </p>
+                            <p class="card-text">Học cách sử dụng hệ thống lưới của Bootstrap để tạo ra giao diện phản
+                                hồi nhanh (responsive) chỉ trong vài phút</p>
+                            <a href="#" class="btn btn-outline-primary fw-semibold">Read More</a>
+                        </div>
+                    </article>
+
+                    <!-- Blog Post Card 2 -->
+                    <article class="card mb-4 overflow-hidden">
+                        <img src="https://cdn-images-1.medium.com/max/2400/1*hp-yfKsmzsj711iLbM8eEw.jpeg"
+                            class="card-img-top blog-post-img" alt="Blog 2">
+                        <div class="card-body p-4">
+                            <span class="badge bg-success mb-2">Web Design</span>
+                            <h2 class="card-title fw-bold">Tại sao UI/UX lại quan trọng?</h2>
+                            <p class="card-text text-muted">
+                                <small>By Cao Thanh Tùng • Jan 10, 2026 • 8 min read</small>
+                            </p>
+                            <p class="card-text">Thiết kế không chỉ là về vẻ đẹp, mà còn là về cách người dùng tương tác
+                                với sản phẩm của bạn</p>
+                            <a href="#" class="btn btn-outline-primary fw-semibold">Read More</a>
+                        </div>
+                    </article>
+
+                    <!-- Blog Post Card 3 -->
+                    <article class="card mb-4 overflow-hidden">
+                        <img src="https://web.dev/static/blog/introducing-learn-javascript/image/thumbnail.svg?hl=vi"
+                            class="card-img-top blog-post-img" alt="Blog 2">
+                        <div class="card-body p-4">
+                            <span class="badge bg-success mb-2">Technology</span>
+                            <h2 class="card-title fw-bold">Javascript: Giới thiệu và hướng dẫn setup môi trường</h2>
+                            <p class="card-text text-muted">
+                                <small>By Cao Thanh Tùng • Apr 26, 2026 • 26 min read</small>
+                            </p>
+                            <p class="card-text">Javascript được sử dụng
+                                phổ biến nhất để tạo tương tác và tính năng động cho website</p>
+                            <a href="#" class="btn btn-outline-primary fw-semibold">Read More</a>
+                        </div>
+                    </article>
+
+
+                </div>
+
+                <!-- Sidebar (4 columns) -->
+                <div class="col-lg-4">
+                    <!-- Sticky sidebar -->
+                    <div class="sticky-top pt-4">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">Search</h5>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search...">
+                                    <button class="btn btn-primary" type="button">Go</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Categories  -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-white">
+                                <h5 class="mb-0">Categories</h5>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Technology
+                                    <span class="badge bg-primary rounded-pill">26</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Web Design
+                                    <span class="badge bg-primary rounded-pill">4</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Javascript
+                                    <span class="badge bg-primary rounded-pill">6</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- Recent Posts -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-white">
+                                <h5 class="mb-0">Recent Posts</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex mb-3">
+                                    <img src="https://sdtimes.com/wp-content/uploads/2015/05/0506.sdt-javascript.jpg"
+                                        class="rounded" width="60" height="60" alt="picture">
+                                    <div class="ms-3">
+                                        <h6 class="mb-1">The Future of JavaScript</h6>
+                                        <small class="text-muted">May 15, 2026</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex mb-3">
+                                    <img src="https://amifactory.team/blog/content/images/size/w2000/2019/05/0-blog-cover-3.png"
+                                        class="rounded" width="60" height="60" alt="picture">
+                                    <div class="ms-3">
+                                        <h6 class="mb-1">How to deploy a website</h6>
+                                        <small class="text-muted">May 10, 2026</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex mb-3">
+                                    <img src="https://www.systemdesignhandbook.com/wp-content/uploads/2025/09/difference-between-system-analysis-and-design.png"
+                                        class="rounded" width="60" height="60" alt="picture">
+                                    <div class="ms-3">
+                                        <h6 class="mb-1">System Analysis and Design</h6>
+                                        <small class="text-muted">May 5, 2026</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Tags -->
+                        <div class="card mb-4">
+                            <div class="card-header bg-white">
+                                <h5 class="mb-0">Tags</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex flex-wrap gap-2">
+                                    <span class="badge bg-secondary">HTML</span>
+                                    <span class="badge bg-secondary">CSS</span>
+                                    <span class="badge bg-secondary">JavaScript</span>
+                                    <span class="badge bg-secondary">React</span>
+                                    <span class="badge bg-secondary">Bootstrap</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
