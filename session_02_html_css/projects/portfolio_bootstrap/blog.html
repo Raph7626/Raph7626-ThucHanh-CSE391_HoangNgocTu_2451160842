@@ -77,9 +77,10 @@
 
                 </div>
 
+
+
                 <!-- Sidebar (4 columns) -->
                 <div class="col-lg-4">
-                    <!-- Sticky sidebar -->
                     <div class="sticky-top pt-4">
                         <div class="card mb-4">
                             <div class="card-body">
@@ -90,7 +91,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!--Categories  -->
                         <div class="card mb-4">
                             <div class="card-header bg-white">
                                 <h5 class="mb-0">Categories</h5>
@@ -166,5 +166,35 @@
             </div>
         </div>
     </section>
+
+    <!-- Comment Form -->
+    <div class="container">
+        <div class="card mb-4 col-lg-8 ">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">Leave a Comment</h5>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" placeholder="YourName" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="YourEmail" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="comment" class="form-label">Comment</label>
+                        <textarea class="form-control" id="comment" rows="4" placeholder="YourComment..."
+                            required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Post Comment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
 
     
