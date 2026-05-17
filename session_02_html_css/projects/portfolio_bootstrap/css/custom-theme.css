@@ -30,3 +30,14 @@
     --bs-body-bg: #f8fafc; 
     --bs-body-color: #334155; 
 }
+
+body {
+    font-family: var(--bs-body-font-family);
+    background-color: var(--bs-body-bg);
+    color: var(--bs-body-color);
+}
+
+.navbar {
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px); 
+}
