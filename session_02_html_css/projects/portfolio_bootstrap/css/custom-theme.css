@@ -6,3 +6,27 @@
     --bs-link-color: #14b8a6;
     --bs-link-hover-color: #0d9488;
 }
+
+
+.btn-primary {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+}
+
+:root {
+    --bs-border-radius: 0.5rem;
+    --bs-border-radius-lg: 1rem;
+    --bs-border-radius-xl: 1.5rem;
+}
+
+.card {
+    border: none;
+    border-radius: 16px; 
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
+}
+
+:root {
+    --bs-body-font-family: 'Inter', system-ui, sans-serif;
+    --bs-body-bg: #f8fafc; 
+    --bs-body-color: #334155; 
+}
