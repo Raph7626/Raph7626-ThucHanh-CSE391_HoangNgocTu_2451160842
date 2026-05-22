@@ -3,46 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quản Lý Công Việc</title>
+<title>Quản Lý Sinh Viên</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<style>
-  .task-done .task-title { text-decoration: line-through; color: #6c757d; }
-  .priority-cao    { border-left: 4px solid #dc3545; }
-  .priority-trung  { border-left: 4px solid #ffc107; }
-  .priority-thap   { border-left: 4px solid #198754; }
-</style>
 </head>
 <body class="bg-light">
 
-    <header>
-       <nav class="navbar navbar-expand-lg navbar-light sticky-top"
-       style="background: rgb(215, 163, 221)">
-        <a class="navbar-brand fs-3 fw-bold text-larger" href="#">📋 Quản Lý Công Việc Cá Nhân</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="#khu-vuc-thong-ke">Bảng Công Việc</a></li>
-                <li class="nav-item"><a class="nav-link" href="https://github.com/Raph7626?tab=repositories">Git</a></li>
-            </ul>
-        </div>
-    </nav>
-    </header>
-
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background: rgb(139, 230, 230)">
+    <a class="navbar-brand fs-3 fw-bold" href="#">🎓 Quản lý sinh viên</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#khu-vuc-thong-ke">Bảng Sinh Viên</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://github.com/Raph7626?tab=repositories">Git</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
 
 <div class="container py-4">
 
   <!-- Thống kê -->
   <div class="row mb-3" id="khu-vuc-thong-ke">
     <div class="col-auto">
-      <span class="badge bg-secondary fs-6">Tổng: <strong id="stat-tong">0</strong></span>
+      <span class="badge bg-primary fs-6">Tổng: <strong id="total-score">0</strong> sinh viên</span>
     </div>
     <div class="col-auto">
-      <span class="badge bg-success fs-6">Hoàn thành: <strong id="stat-xong">0</strong></span>
-    </div>
-    <div class="col-auto">
-      <span class="badge bg-warning text-dark fs-6">Chưa xong: <strong id="stat-chua">0</strong></span>
+      <span class="badge bg-success fs-6">Điểm TB lớp: <strong id="average-score">—</strong></span>
     </div>
   </div>
 
@@ -51,11 +40,24 @@
 
   <!-- Nút thêm -->
   <div class="mb-3">
-    <button class="btn btn-primary" id="btn-mo-form">+ Thêm Công Việc</button>
+    <button class="btn btn-primary" id="btn-mo-form">+ Thêm Sinh Viên</button>
   </div>
 
-  <!-- Danh sách công việc -->
-  <div id="danh-sach"></div>
+  <!-- Bảng danh sách -->
+  <table class="table table-bordered table-hover bg-white">
+    <thead class="table-dark">
+      <tr>
+        <th>Mã SV</th>
+        <th>Họ và Tên</th>
+        <th>Ngày Sinh</th>
+        <th>Lớp</th>
+        <th>Điểm TB</th>
+        <th>Email</th>
+        <th>Thao Tác</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
 
 </div>
 
@@ -64,31 +66,50 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modal-tieu-de">Thêm Công Việc</h5>
+        <h5 class="modal-title" id="modal-tieu-de">Thêm Sinh Viên</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <div class="mb-3">
-          <label class="form-label">Tiêu đề <span class="text-danger">*</span></label>
-          <input type="text" id="f-title" class="form-control" placeholder="Tên công việc">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Mô tả ngắn</label>
-          <textarea id="f-desc" class="form-control" rows="2" placeholder="Mô tả..."></textarea>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Hạn hoàn thành</label>
-          <input type="date" id="f-deadline" class="form-control">
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Mức ưu tiên</label>
-          <select id="f-priority" class="form-select">
-            <option value="cao">Cao</option>
-            <option value="trung" selected>Trung bình</option>
-            <option value="thap">Thấp</option>
-          </select>
-        </div>
-        <input type="hidden" id="f-edit-index" value="-1">
+        <form id="student-form" novalidate>
+
+          <div class="mb-3">
+            <label class="form-label">Mã sinh viên <span class="text-danger">*</span></label>
+            <input type="text" id="f-id" name="f-id" class="form-control" placeholder="VD: SV001">
+            <div class="invalid-feedback" id="err-id"></div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Họ và tên <span class="text-danger">*</span></label>
+            <input type="text" id="f-name" name="f-name" class="form-control" placeholder="Nguyễn Văn A">
+            <div class="invalid-feedback" id="err-name"></div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Ngày sinh</label>
+            <input type="date" id="f-dob" name="f-dob" class="form-control">
+            <div class="invalid-feedback" id="err-dob"></div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Lớp học <span class="text-danger">*</span></label>
+            <input type="text" id="f-class" name="f-class" class="form-control" placeholder="VD: CNTT-K47">
+            <div class="invalid-feedback" id="err-class"></div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Điểm trung bình <span class="text-danger">*</span></label>
+            <input type="number" id="f-gpa" name="f-gpa" class="form-control" placeholder="0 - 10" step="0.1" min="0" max="10">
+            <div class="invalid-feedback" id="err-gpa"></div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" id="f-email" name="f-email" class="form-control" placeholder="example@email.com">
+            <div class="invalid-feedback" id="err-email"></div>
+          </div>
+
+          <input type="hidden" id="f-edit-index" value="-1">
+        </form>
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
@@ -98,170 +119,257 @@
   </div>
 </div>
 
+<!-- jQuery + Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+
 // ── DỮ LIỆU ──
-const STORAGE_KEY = 'danh_sach_cong_viec';
-let tasks = [];
-const modalEl = document.getElementById('modal-form');
-const bsModal = new bootstrap.Modal(modalEl);
+const STORAGE_KEY = 'danh_sach_sinh_vien';
+let students = [];
+const bsModal = new bootstrap.Modal(document.getElementById('modal-form'));
 
 // ── LOAD / SAVE localStorage ──
-function loadTasks() {
+function loadStudents() {
   const raw = localStorage.getItem(STORAGE_KEY);
-  tasks = raw ? JSON.parse(raw) : [
-    { title: 'Ôn tập Toán rời rạc', desc: 'Chương 3 và 4', deadline: '2025-06-10', priority: 'cao',   done: false },
-    { title: 'Nộp bài tập lớn',     desc: 'Môn CNPM',      deadline: '2025-06-15', priority: 'trung', done: false },
-    { title: 'Đọc sách lập trình',  desc: 'Clean Code',    deadline: '',           priority: 'thap',  done: true  },
+  students = raw ? JSON.parse(raw) : [
+    { id:'SV001', name:'Nguyễn Thị Lan Anh', dob:'2003-05-12', cls:'CNTT-K47A', gpa:8.5, email:'lananh@email.com' },
+    { id:'SV002', name:'Trần Minh Khoa',     dob:'2002-11-30', cls:'CNTT-K47A', gpa:7.2, email:'minhkhoa@email.com' },
+    { id:'SV004', name:'Phạm Quốc Bảo',      dob:'2003-05-12', cls:'CNTT-K47A', gpa:8.6, email:'baopq@email.com' },
+    { id:'SV005', name:'Lê Thị Hồng',        dob:'2003-05-12', cls:'CNTT-K47A', gpa:8.3, email:'hongle@email.com' },
+    { id:'SV006', name:'Đặng Văn Tuấn',      dob:'2003-05-12', cls:'CNTT-K47A', gpa:8.9, email:'tuandv@email.com' },
   ];
-  if (!raw) saveTasks();
+  if (!raw) saveStudents();
 }
 
-function saveTasks() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+function saveStudents() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
 }
 
-// ── HIỂN THỊ DANH SÁCH ──
-function renderTasks() {
-  const wrap = document.getElementById('danh-sach');
-  if (tasks.length === 0) {
-    wrap.innerHTML = '<p class="text-muted">Chưa có công việc nào.</p>';
+// ── HIỂN THỊ BẢNG ──
+function renderStudents() {
+  const tbody = $('#tbody');
+  if (students.length === 0) {
+    tbody.html('<tr><td colspan="7" class="text-center text-muted py-4">Chưa có sinh viên nào.</td></tr>');
     return;
   }
-
-  wrap.innerHTML = tasks.map((t, idx) => `
-    <div class="card mb-2 priority-${t.priority} ${t.done ? 'task-done' : ''}">
-      <div class="card-body d-flex justify-content-between align-items-start">
-        <div>
-          <h6 class="card-title task-title mb-1">${t.title}</h6>
-          ${t.desc ? `<p class="card-text text-muted small mb-1">${t.desc}</p>` : ''}
-          <small class="text-muted">
-            ${t.deadline ? '📅 ' + new Date(t.deadline).toLocaleDateString('vi-VN') + ' &nbsp;' : ''}
-            🏷️ Ưu tiên: ${t.priority === 'cao' ? 'Cao' : t.priority === 'trung' ? 'Trung bình' : 'Thấp'}
-          </small>
-        </div>
-        <div class="d-flex gap-2 flex-shrink-0 ms-3">
-          <button class="btn btn-sm ${t.done ? 'btn-secondary' : 'btn-success'}"
-                  onclick="doiTrangThai(${idx})">
-            ${t.done ? '↩ Chưa xong' : '✓ Xong'}
-          </button>
-          <button class="btn btn-warning btn-sm" onclick="moFormSua(${idx})">Sửa</button>
-          <button class="btn btn-danger btn-sm" onclick="xoaCongViec(${idx})">Xóa</button>
-        </div>
-      </div>
-    </div>
-  `).join('');
+  tbody.html(students.map((s, idx) => `
+    <tr>
+      <td>${s.id}</td>
+      <td>${s.name}</td>
+      <td>${s.dob ? new Date(s.dob).toLocaleDateString('vi-VN') : '—'}</td>
+      <td>${s.cls}</td>
+      <td>${parseFloat(s.gpa).toFixed(1)}</td>
+      <td>${s.email || '—'}</td>
+      <td>
+        <button class="btn btn-warning btn-sm me-1" onclick="moFormSua(${idx})">Sửa</button>
+        <button class="btn btn-danger btn-sm" onclick="xoaSinhVien(${idx})">Xóa</button>
+      </td>
+    </tr>
+  `).join(''));
 }
 
 // ── THỐNG KÊ ──
-function updateTaskSummary() {
-  const tong = tasks.length;
-  const xong = tasks.filter(t => t.done).length;
-  document.getElementById('stat-tong').textContent = tong;
-  document.getElementById('stat-xong').textContent = xong;
-  document.getElementById('stat-chua').textContent = tong - xong;
+function updateStatistics() {
+  const total = students.length;
+  const avg = total
+    ? (students.reduce((sum, s) => sum + parseFloat(s.gpa), 0) / total).toFixed(2)
+    : '—';
+  $('#total-score').text(total);
+  $('#average-score').text(avg);
 }
 
 // ── THÔNG BÁO ──
-function showMessage(msg, type = 'success') {
-  const el = document.getElementById('thong-bao');
-  el.className = `alert alert-${type}`;
-  el.textContent = msg;
-  el.classList.remove('d-none');
-  setTimeout(() => el.classList.add('d-none'), 3000);
+function showThongBao(msg, type = 'success') {
+  $('#thong-bao')
+    .removeClass('d-none alert-success alert-danger alert-warning alert-info')
+    .addClass(`alert-${type}`)
+    .text(msg);
+  setTimeout(() => $('#thong-bao').addClass('d-none'), 3000);
 }
 
-// ── RESET FORM ──
+// ── RESET FORM + XÓA LỖI ──
 function resetForm() {
-  document.getElementById('f-title').value    = '';
-  document.getElementById('f-desc').value     = '';
-  document.getElementById('f-deadline').value = '';
-  document.getElementById('f-priority').value = 'trung';
-  document.getElementById('f-edit-index').value = '-1';
-  document.getElementById('modal-tieu-de').textContent = 'Thêm Công Việc';
-  document.getElementById('btn-luu').textContent = 'Lưu';
+  $('#student-form')[0].reset();
+  $('#f-edit-index').val('-1');
+  $('#modal-tieu-de').text('Thêm Sinh Viên');
+  $('#btn-luu').text('Lưu');
+  $('#f-id').prop('readonly', false);
+  // Xóa trạng thái lỗi
+  $('.form-control').removeClass('is-invalid is-valid');
+  $('.invalid-feedback').text('');
 }
 
 // ── LẤY DỮ LIỆU FORM ──
 function getFormData() {
   return {
-    title:    document.getElementById('f-title').value.trim(),
-    desc:     document.getElementById('f-desc').value.trim(),
-    deadline: document.getElementById('f-deadline').value,
-    priority: document.getElementById('f-priority').value,
-    done:     false,
+    id:    $('#f-id').val().trim(),
+    name:  $('#f-name').val().trim(),
+    dob:   $('#f-dob').val(),
+    cls:   $('#f-class').val().trim(),
+    gpa:   parseFloat($('#f-gpa').val()),
+    email: $('#f-email').val().trim(),
   };
 }
 
+// ════════════════════════════════════════
+//  VALIDATION bằng jQuery
+// ════════════════════════════════════════
+function setError(fieldId, errId, msg) {
+  $(`#${fieldId}`).addClass('is-invalid').removeClass('is-valid');
+  $(`#${errId}`).text(msg);
+}
+
+function setValid(fieldId) {
+  $(`#${fieldId}`).addClass('is-valid').removeClass('is-invalid');
+}
+
+function validate() {
+  let hopLe = true;
+  const isEditMode = parseInt($('#f-edit-index').val()) !== -1;
+
+  // Mã sinh viên
+  const id = $('#f-id').val().trim();
+  if (!id) {
+    setError('f-id', 'err-id', 'Vui lòng nhập mã sinh viên.');
+    hopLe = false;
+  } else if (!/^SV\d{3,}$/i.test(id)) {
+    setError('f-id', 'err-id', 'Mã SV phải có dạng SV + 3 chữ số (VD: SV001).');
+    hopLe = false;
+  } else if (!isEditMode && students.some(s => s.id.toLowerCase() === id.toLowerCase())) {
+    setError('f-id', 'err-id', 'Mã sinh viên đã tồn tại.');
+    hopLe = false;
+  } else {
+    setValid('f-id');
+  }
+
+  // Họ và tên
+  const name = $('#f-name').val().trim();
+  if (!name) {
+    setError('f-name', 'err-name', 'Vui lòng nhập họ và tên.');
+    hopLe = false;
+  } else if (name.length < 3) {
+    setError('f-name', 'err-name', 'Họ và tên phải có ít nhất 3 ký tự.');
+    hopLe = false;
+  } else {
+    setValid('f-name');
+  }
+
+  // Ngày sinh (không bắt buộc, nhưng nếu nhập thì phải hợp lệ)
+  const dob = $('#f-dob').val();
+  if (dob) {
+    const ngaySinh = new Date(dob);
+    const homNay = new Date();
+    if (isNaN(ngaySinh.getTime())) {
+      setError('f-dob', 'err-dob', 'Ngày sinh không hợp lệ.');
+      hopLe = false;
+    } else if (ngaySinh >= homNay) {
+      setError('f-dob', 'err-dob', 'Ngày sinh phải nhỏ hơn ngày hiện tại.');
+      hopLe = false;
+    } else {
+      setValid('f-dob');
+    }
+  }
+
+  // Lớp học
+  const cls = $('#f-class').val().trim();
+  if (!cls) {
+    setError('f-class', 'err-class', 'Vui lòng nhập lớp học.');
+    hopLe = false;
+  } else {
+    setValid('f-class');
+  }
+
+  // Điểm trung bình
+  const gpa = $('#f-gpa').val();
+  if (gpa === '') {
+    setError('f-gpa', 'err-gpa', 'Vui lòng nhập điểm trung bình.');
+    hopLe = false;
+  } else if (parseFloat(gpa) < 0 || parseFloat(gpa) > 10) {
+    setError('f-gpa', 'err-gpa', 'Điểm phải nằm trong khoảng 0 đến 10.');
+    hopLe = false;
+  } else {
+    setValid('f-gpa');
+  }
+
+  // Email (không bắt buộc, nhưng nếu nhập thì phải đúng định dạng)
+  const email = $('#f-email').val().trim();
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (email && !emailRegex.test(email)) {
+    setError('f-email', 'err-email', 'Email không đúng định dạng.');
+    hopLe = false;
+  } else if (email) {
+    setValid('f-email');
+  }
+
+  return hopLe;
+}
+
+// Xóa lỗi khi người dùng bắt đầu nhập lại
+$('#student-form').on('input change', '.form-control', function () {
+  $(this).removeClass('is-invalid is-valid');
+  $(`#err-${this.id.replace('f-', '')}`).text('');
+});
+
 // ── MỞ FORM SỬA ──
 function moFormSua(idx) {
-  const t = tasks[idx];
+  const s = students[idx];
   resetForm();
-  document.getElementById('f-title').value    = t.title;
-  document.getElementById('f-desc').value     = t.desc;
-  document.getElementById('f-deadline').value = t.deadline;
-  document.getElementById('f-priority').value = t.priority;
-  document.getElementById('f-edit-index').value = idx;
-  document.getElementById('modal-tieu-de').textContent = 'Cập Nhật Công Việc';
-  document.getElementById('btn-luu').textContent = 'Cập Nhật';
+  $('#f-id').val(s.id).prop('readonly', true);
+  $('#f-name').val(s.name);
+  $('#f-dob').val(s.dob || '');
+  $('#f-class').val(s.cls);
+  $('#f-gpa').val(s.gpa);
+  $('#f-email').val(s.email || '');
+  $('#f-edit-index').val(idx);
+  $('#modal-tieu-de').text('Cập Nhật Sinh Viên');
+  $('#btn-luu').text('Cập Nhật');
   bsModal.show();
 }
 
-// ── ĐỔI TRẠNG THÁI ──
-function doiTrangThai(idx) {
-  tasks[idx].done = !tasks[idx].done;
-  saveTasks();
-  renderTasks();
-  updateTaskSummary();
-  showMessage(tasks[idx].done ? 'Đã đánh dấu hoàn thành!' : 'Đã đánh dấu chưa xong.', 'info');
-}
-
-// ── XÓA CÔNG VIỆC ──
-function xoaCongViec(idx) {
-  const ten = tasks[idx].title;
-  if (!confirm(`Bạn có chắc muốn xóa công việc "${ten}"?`)) return;
-  tasks.splice(idx, 1);
-  saveTasks();
-  renderTasks();
-  updateTaskSummary();
-  showMessage(`Đã xóa công việc "${ten}".`, 'warning');
+// ── XÓA SINH VIÊN ──
+function xoaSinhVien(idx) {
+  const ten = students[idx].name;
+  if (!confirm(`Bạn có chắc muốn xóa sinh viên "${ten}"?`)) return;
+  students.splice(idx, 1);
+  saveStudents();
+  renderStudents();
+  updateStatistics();
+  showThongBao(`Đã xóa sinh viên "${ten}".`, 'info');
 }
 
 // ── SỰ KIỆN: Nút mở form thêm ──
-document.getElementById('btn-mo-form').addEventListener('click', () => {
+$('#btn-mo-form').on('click', function () {
   resetForm();
   bsModal.show();
 });
 
-// ── SỰ KIỆN: Nút Lưu ──
-document.getElementById('btn-luu').addEventListener('click', () => {
-  const title = document.getElementById('f-title').value.trim();
-  if (!title) { alert('Vui lòng nhập tiêu đề công việc!'); return; }
 
-  const idx = parseInt(document.getElementById('f-edit-index').value);
+$('#btn-luu').on('click', function () {
+  if (!validate()) return;
+
+  const idx = parseInt($('#f-edit-index').val());
   const data = getFormData();
 
   if (idx === -1) {
-    // Thêm mới
-    tasks.push(data);
-    showMessage(`Đã thêm công việc "${data.title}"!`);
+    students.push(data);
+    showThongBao(`Đã thêm sinh viên "${data.name}" thành công!`);
   } else {
-    // Cập nhật — giữ nguyên trạng thái done
-    data.done = tasks[idx].done;
-    tasks[idx] = data;
-    showMessage(`Đã cập nhật công việc "${data.title}"!`);
+    students[idx] = data;
+    showThongBao(`Đã cập nhật thông tin "${data.name}"!`);
   }
 
-  saveTasks();
-  renderTasks();
-  updateTaskSummary();
+  saveStudents();
+  renderStudents();
+  updateStatistics();
   bsModal.hide();
 });
 
 // ── KHỞI TẠO ──
-loadTasks();
-renderTasks();
-updateTaskSummary();
+loadStudents();
+renderStudents();
+updateStatistics();
+
 </script>
 </body>
 </html>
