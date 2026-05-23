@@ -70,46 +70,44 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        <form id="student-form" novalidate>
 
-          <div class="mb-3">
-            <label class="form-label">Mã sinh viên <span class="text-danger">*</span></label>
-            <input type="text" id="f-id" name="f-id" class="form-control" placeholder="VD: SV001">
-            <div class="invalid-feedback" id="err-id"></div>
-          </div>
+        <div class="mb-3">
+          <label class="form-label">Mã sinh viên *</label>
+          <input type="text" id="f-id" class="form-control" placeholder="VD: SV001">
+          <div class="text-danger small mt-1" id="err-id"></div>
+        </div>
 
-          <div class="mb-3">
-            <label class="form-label">Họ và tên <span class="text-danger">*</span></label>
-            <input type="text" id="f-name" name="f-name" class="form-control" placeholder="Nguyễn Văn A">
-            <div class="invalid-feedback" id="err-name"></div>
-          </div>
+        <div class="mb-3">
+          <label class="form-label">Họ và tên *</label>
+          <input type="text" id="f-name" class="form-control" placeholder="Nguyễn Văn A">
+          <div class="text-danger small mt-1" id="err-name"></div>
+        </div>
 
-          <div class="mb-3">
-            <label class="form-label">Ngày sinh</label>
-            <input type="date" id="f-dob" name="f-dob" class="form-control">
-            <div class="invalid-feedback" id="err-dob"></div>
-          </div>
+        <div class="mb-3">
+          <label class="form-label">Ngày sinh</label>
+          <input type="date" id="f-dob" class="form-control">
+          <div class="text-danger small mt-1" id="err-dob"></div>
+        </div>
 
-          <div class="mb-3">
-            <label class="form-label">Lớp học <span class="text-danger">*</span></label>
-            <input type="text" id="f-class" name="f-class" class="form-control" placeholder="VD: CNTT-K47">
-            <div class="invalid-feedback" id="err-class"></div>
-          </div>
+        <div class="mb-3">
+          <label class="form-label">Lớp học *</label>
+          <input type="text" id="f-class" class="form-control" placeholder="VD: CNTT-K47">
+          <div class="text-danger small mt-1" id="err-class"></div>
+        </div>
 
-          <div class="mb-3">
-            <label class="form-label">Điểm trung bình <span class="text-danger">*</span></label>
-            <input type="number" id="f-gpa" name="f-gpa" class="form-control" placeholder="0 - 10" step="0.1" min="0" max="10">
-            <div class="invalid-feedback" id="err-gpa"></div>
-          </div>
+        <div class="mb-3">
+          <label class="form-label">Điểm trung bình *</label>
+          <input type="number" id="f-gpa" class="form-control" placeholder="0 - 10" step="0.1" min="0" max="10">
+          <div class="text-danger small mt-1" id="err-gpa"></div>
+        </div>
 
-          <div class="mb-3">
-            <label class="form-label">Email</label>
-            <input type="email" id="f-email" name="f-email" class="form-control" placeholder="example@email.com">
-            <div class="invalid-feedback" id="err-email"></div>
-          </div>
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" id="f-email" class="form-control" placeholder="example@email.com">
+          <div class="text-danger small mt-1" id="err-email"></div>
+        </div>
 
-          <input type="hidden" id="f-edit-index" value="-1">
-        </form>
+        <input type="hidden" id="f-edit-index" value="-1">
       </div>
       <div class="modal-footer">
         <button class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
@@ -119,27 +117,51 @@
   </div>
 </div>
 
-<!-- jQuery + Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 
+// ── LẤY CÁC PHẦN TỬ DOM ──
+var btnMoForm   = document.getElementById('btn-mo-form');
+var btnLuu      = document.getElementById('btn-luu');
+var tbody       = document.getElementById('tbody');
+var thongBao    = document.getElementById('thong-bao');
+var modalTieuDe = document.getElementById('modal-tieu-de');
+
+var inputId     = document.getElementById('f-id');
+var inputName   = document.getElementById('f-name');
+var inputDob    = document.getElementById('f-dob');
+var inputClass  = document.getElementById('f-class');
+var inputGpa    = document.getElementById('f-gpa');
+var inputEmail  = document.getElementById('f-email');
+var editIndex   = document.getElementById('f-edit-index');
+
+var errId    = document.getElementById('err-id');
+var errName  = document.getElementById('err-name');
+var errDob   = document.getElementById('err-dob');
+var errClass = document.getElementById('err-class');
+var errGpa   = document.getElementById('err-gpa');
+var errEmail = document.getElementById('err-email');
+
 // ── DỮ LIỆU ──
-const STORAGE_KEY = 'danh_sach_sinh_vien';
-let students = [];
-const bsModal = new bootstrap.Modal(document.getElementById('modal-form'));
+var STORAGE_KEY = 'danh_sach_sinh_vien';
+var students = [];
+var bsModal = new bootstrap.Modal(document.getElementById('modal-form'));
 
 // ── LOAD / SAVE localStorage ──
 function loadStudents() {
-  const raw = localStorage.getItem(STORAGE_KEY);
-  students = raw ? JSON.parse(raw) : [
-    { id:'SV001', name:'Nguyễn Thị Lan Anh', dob:'2003-05-12', cls:'CNTT-K47A', gpa:8.5, email:'lananh@email.com' },
-    { id:'SV002', name:'Trần Minh Khoa',     dob:'2002-11-30', cls:'CNTT-K47A', gpa:7.2, email:'minhkhoa@email.com' },
-    { id:'SV004', name:'Phạm Quốc Bảo',      dob:'2003-05-12', cls:'CNTT-K47A', gpa:8.6, email:'baopq@email.com' },
-    { id:'SV005', name:'Lê Thị Hồng',        dob:'2003-05-12', cls:'CNTT-K47A', gpa:8.3, email:'hongle@email.com' },
-    { id:'SV006', name:'Đặng Văn Tuấn',      dob:'2003-05-12', cls:'CNTT-K47A', gpa:8.9, email:'tuandv@email.com' },
-  ];
-  if (!raw) saveStudents();
+  var raw = localStorage.getItem(STORAGE_KEY);
+  if (raw) {
+    students = JSON.parse(raw);
+  } else {
+    students = [
+      { id: 'SV001', name: 'Nguyễn Thị Lan Anh', dob: '2003-05-12', cls: 'CNTT-K47A', gpa: 8.5, email: 'lananh@email.com' },
+      { id: 'SV002', name: 'Trần Minh Khoa',     dob: '2002-11-30', cls: 'CNTT-K47A', gpa: 7.2, email: 'minhkhoa@email.com' },
+      { id: 'SV003', name: 'Phạm Quốc Bảo',      dob: '2003-03-20', cls: 'CNTT-K47B', gpa: 8.6, email: 'baopq@email.com' },
+      { id: 'SV004', name: 'Lê Thị Hồng',        dob: '2003-07-15', cls: 'CNTT-K47B', gpa: 6.8, email: 'hongle@email.com' },
+      { id: 'SV005', name: 'Đặng Văn Tuấn',      dob: '2002-09-01', cls: 'CNTT-K47A', gpa: 9.0, email: 'tuandv@email.com' },
+    ];
+    saveStudents();
+  }
 }
 
 function saveStudents() {
@@ -148,215 +170,204 @@ function saveStudents() {
 
 // ── HIỂN THỊ BẢNG ──
 function renderStudents() {
-  const tbody = $('#tbody');
   if (students.length === 0) {
-    tbody.html('<tr><td colspan="7" class="text-center text-muted py-4">Chưa có sinh viên nào.</td></tr>');
+    tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted py-4">Chưa có sinh viên nào.</td></tr>';
     return;
   }
-  tbody.html(students.map((s, idx) => `
-    <tr>
-      <td>${s.id}</td>
-      <td>${s.name}</td>
-      <td>${s.dob ? new Date(s.dob).toLocaleDateString('vi-VN') : '—'}</td>
-      <td>${s.cls}</td>
-      <td>${parseFloat(s.gpa).toFixed(1)}</td>
-      <td>${s.email || '—'}</td>
-      <td>
-        <button class="btn btn-warning btn-sm me-1" onclick="moFormSua(${idx})">Sửa</button>
-        <button class="btn btn-danger btn-sm" onclick="xoaSinhVien(${idx})">Xóa</button>
-      </td>
-    </tr>
-  `).join(''));
+
+  var html = '';
+  for (var i = 0; i < students.length; i++) {
+    var s = students[i];
+    var ngaySinh = s.dob ? new Date(s.dob).toLocaleDateString('vi-VN') : '—';
+    html += '<tr>';
+    html += '<td>' + s.id + '</td>';
+    html += '<td>' + s.name + '</td>';
+    html += '<td>' + ngaySinh + '</td>';
+    html += '<td>' + s.cls + '</td>';
+    html += '<td>' + parseFloat(s.gpa).toFixed(1) + '</td>';
+    html += '<td>' + (s.email || '—') + '</td>';
+    html += '<td>';
+    html += '<button class="btn btn-warning btn-sm me-1" onclick="moFormSua(' + i + ')">Sửa</button>';
+    html += '<button class="btn btn-danger btn-sm" onclick="xoaSinhVien(' + i + ')">Xóa</button>';
+    html += '</td>';
+    html += '</tr>';
+  }
+  tbody.innerHTML = html;
 }
 
 // ── THỐNG KÊ ──
 function updateStatistics() {
-  const total = students.length;
-  const avg = total
-    ? (students.reduce((sum, s) => sum + parseFloat(s.gpa), 0) / total).toFixed(2)
-    : '—';
-  $('#total-score').text(total);
-  $('#average-score').text(avg);
+  var total = students.length;
+  var avg = '—';
+  if (total > 0) {
+    var tong = 0;
+    for (var i = 0; i < students.length; i++) {
+      tong += parseFloat(students[i].gpa);
+    }
+    avg = (tong / total).toFixed(2);
+  }
+  document.getElementById('total-score').textContent = total;
+  document.getElementById('average-score').textContent = avg;
 }
 
 // ── THÔNG BÁO ──
-function showThongBao(msg, type = 'success') {
-  $('#thong-bao')
-    .removeClass('d-none alert-success alert-danger alert-warning alert-info')
-    .addClass(`alert-${type}`)
-    .text(msg);
-  setTimeout(() => $('#thong-bao').addClass('d-none'), 3000);
+function showThongBao(msg, type) {
+  if (!type) type = 'success';
+  thongBao.className = 'alert alert-' + type;
+  thongBao.textContent = msg;
+  setTimeout(function () {
+    thongBao.classList.add('d-none');
+  }, 3000);
 }
 
-// ── RESET FORM + XÓA LỖI ──
+// ── RESET FORM ──
 function resetForm() {
-  $('#student-form')[0].reset();
-  $('#f-edit-index').val('-1');
-  $('#modal-tieu-de').text('Thêm Sinh Viên');
-  $('#btn-luu').text('Lưu');
-  $('#f-id').prop('readonly', false);
-  // Xóa trạng thái lỗi
-  $('.form-control').removeClass('is-invalid is-valid');
-  $('.invalid-feedback').text('');
+  inputId.value    = '';
+  inputName.value  = '';
+  inputDob.value   = '';
+  inputClass.value = '';
+  inputGpa.value   = '';
+  inputEmail.value = '';
+  editIndex.value  = '-1';
+  inputId.removeAttribute('readonly');
+  modalTieuDe.textContent   = 'Thêm Sinh Viên';
+  btnLuu.textContent        = 'Lưu';
+  // Xóa lỗi cũ
+  errId.textContent    = '';
+  errName.textContent  = '';
+  errDob.textContent   = '';
+  errClass.textContent = '';
+  errGpa.textContent   = '';
+  errEmail.textContent = '';
 }
 
-// ── LẤY DỮ LIỆU FORM ──
-function getFormData() {
-  return {
-    id:    $('#f-id').val().trim(),
-    name:  $('#f-name').val().trim(),
-    dob:   $('#f-dob').val(),
-    cls:   $('#f-class').val().trim(),
-    gpa:   parseFloat($('#f-gpa').val()),
-    email: $('#f-email').val().trim(),
-  };
-}
-
-// ════════════════════════════════════════
-//  VALIDATION bằng jQuery
-// ════════════════════════════════════════
-function setError(fieldId, errId, msg) {
-  $(`#${fieldId}`).addClass('is-invalid').removeClass('is-valid');
-  $(`#${errId}`).text(msg);
-}
-
-function setValid(fieldId) {
-  $(`#${fieldId}`).addClass('is-valid').removeClass('is-invalid');
-}
-
+// ── VALIDATION ──
 function validate() {
-  let hopLe = true;
-  const isEditMode = parseInt($('#f-edit-index').val()) !== -1;
+  var hopLe = true;
+  // Xóa lỗi cũ
+  errId.textContent = errName.textContent = errDob.textContent = '';
+  errClass.textContent = errGpa.textContent = errEmail.textContent = '';
 
-  // Mã sinh viên
-  const id = $('#f-id').val().trim();
-  if (!id) {
-    setError('f-id', 'err-id', 'Vui lòng nhập mã sinh viên.');
-    hopLe = false;
-  } else if (!/^SV\d{3,}$/i.test(id)) {
-    setError('f-id', 'err-id', 'Mã SV phải có dạng SV + 3 chữ số (VD: SV001).');
-    hopLe = false;
-  } else if (!isEditMode && students.some(s => s.id.toLowerCase() === id.toLowerCase())) {
-    setError('f-id', 'err-id', 'Mã sinh viên đã tồn tại.');
-    hopLe = false;
-  } else {
-    setValid('f-id');
-  }
+  var id    = inputId.value.trim();
+  var name  = inputName.value.trim();
+  var dob   = inputDob.value;
+  var cls   = inputClass.value.trim();
+  var gpa   = inputGpa.value;
+  var email = inputEmail.value.trim();
+  var isEdit = parseInt(editIndex.value) !== -1;
 
-  // Họ và tên
-  const name = $('#f-name').val().trim();
-  if (!name) {
-    setError('f-name', 'err-name', 'Vui lòng nhập họ và tên.');
+  // Mã SV
+  if (id === '') {
+    errId.textContent = 'Vui lòng nhập mã sinh viên.';
     hopLe = false;
-  } else if (name.length < 3) {
-    setError('f-name', 'err-name', 'Họ và tên phải có ít nhất 3 ký tự.');
-    hopLe = false;
-  } else {
-    setValid('f-name');
-  }
-
-  // Ngày sinh (không bắt buộc, nhưng nếu nhập thì phải hợp lệ)
-  const dob = $('#f-dob').val();
-  if (dob) {
-    const ngaySinh = new Date(dob);
-    const homNay = new Date();
-    if (isNaN(ngaySinh.getTime())) {
-      setError('f-dob', 'err-dob', 'Ngày sinh không hợp lệ.');
-      hopLe = false;
-    } else if (ngaySinh >= homNay) {
-      setError('f-dob', 'err-dob', 'Ngày sinh phải nhỏ hơn ngày hiện tại.');
-      hopLe = false;
-    } else {
-      setValid('f-dob');
+  } else if (!isEdit) {
+    // Kiểm tra trùng mã (chỉ khi thêm mới)
+    for (var i = 0; i < students.length; i++) {
+      if (students[i].id.toLowerCase() === id.toLowerCase()) {
+        errId.textContent = 'Mã sinh viên đã tồn tại.';
+        hopLe = false;
+        break;
+      }
     }
   }
 
-  // Lớp học
-  const cls = $('#f-class').val().trim();
-  if (!cls) {
-    setError('f-class', 'err-class', 'Vui lòng nhập lớp học.');
+  // Họ tên
+  if (name === '') {
+    errName.textContent = 'Vui lòng nhập họ và tên.';
     hopLe = false;
-  } else {
-    setValid('f-class');
   }
 
-  // Điểm trung bình
-  const gpa = $('#f-gpa').val();
+  // Ngày sinh (không bắt buộc)
+  if (dob !== '') {
+    var ngaySinh = new Date(dob);
+    var homNay = new Date();
+    if (ngaySinh >= homNay) {
+      errDob.textContent = 'Ngày sinh phải nhỏ hơn ngày hiện tại.';
+      hopLe = false;
+    }
+  }
+
+  // Lớp
+  if (cls === '') {
+    errClass.textContent = 'Vui lòng nhập lớp học.';
+    hopLe = false;
+  }
+
+  // Điểm
   if (gpa === '') {
-    setError('f-gpa', 'err-gpa', 'Vui lòng nhập điểm trung bình.');
+    errGpa.textContent = 'Vui lòng nhập điểm trung bình.';
     hopLe = false;
   } else if (parseFloat(gpa) < 0 || parseFloat(gpa) > 10) {
-    setError('f-gpa', 'err-gpa', 'Điểm phải nằm trong khoảng 0 đến 10.');
+    errGpa.textContent = 'Điểm phải từ 0 đến 10.';
     hopLe = false;
-  } else {
-    setValid('f-gpa');
   }
 
-  // Email (không bắt buộc, nhưng nếu nhập thì phải đúng định dạng)
-  const email = $('#f-email').val().trim();
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (email && !emailRegex.test(email)) {
-    setError('f-email', 'err-email', 'Email không đúng định dạng.');
-    hopLe = false;
-  } else if (email) {
-    setValid('f-email');
+  // Email (không bắt buộc)
+  if (email !== '') {
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      errEmail.textContent = 'Email không đúng định dạng.';
+      hopLe = false;
+    }
   }
 
   return hopLe;
 }
 
-// Xóa lỗi khi người dùng bắt đầu nhập lại
-$('#student-form').on('input change', '.form-control', function () {
-  $(this).removeClass('is-invalid is-valid');
-  $(`#err-${this.id.replace('f-', '')}`).text('');
-});
-
 // ── MỞ FORM SỬA ──
 function moFormSua(idx) {
-  const s = students[idx];
+  var s = students[idx];
   resetForm();
-  $('#f-id').val(s.id).prop('readonly', true);
-  $('#f-name').val(s.name);
-  $('#f-dob').val(s.dob || '');
-  $('#f-class').val(s.cls);
-  $('#f-gpa').val(s.gpa);
-  $('#f-email').val(s.email || '');
-  $('#f-edit-index').val(idx);
-  $('#modal-tieu-de').text('Cập Nhật Sinh Viên');
-  $('#btn-luu').text('Cập Nhật');
+  inputId.value    = s.id;
+  inputName.value  = s.name;
+  inputDob.value   = s.dob || '';
+  inputClass.value = s.cls;
+  inputGpa.value   = s.gpa;
+  inputEmail.value = s.email || '';
+  editIndex.value  = idx;
+  inputId.setAttribute('readonly', true);
+  modalTieuDe.textContent = 'Cập Nhật Sinh Viên';
+  btnLuu.textContent      = 'Cập Nhật';
   bsModal.show();
 }
 
 // ── XÓA SINH VIÊN ──
 function xoaSinhVien(idx) {
-  const ten = students[idx].name;
-  if (!confirm(`Bạn có chắc muốn xóa sinh viên "${ten}"?`)) return;
+  var ten = students[idx].name;
+  if (!confirm('Bạn có chắc muốn xóa sinh viên "' + ten + '"?')) return;
   students.splice(idx, 1);
   saveStudents();
   renderStudents();
   updateStatistics();
-  showThongBao(`Đã xóa sinh viên "${ten}".`, 'info');
+  showThongBao('Đã xóa sinh viên "' + ten + '".', 'info');
 }
 
 // ── SỰ KIỆN: Nút mở form thêm ──
-$('#btn-mo-form').on('click', function () {
+btnMoForm.addEventListener('click', function () {
   resetForm();
   bsModal.show();
 });
 
 // ── SỰ KIỆN: Nút Lưu ──
-$('#btn-luu').on('click', function () {
+btnLuu.addEventListener('click', function () {
   if (!validate()) return;
 
-  const idx = parseInt($('#f-edit-index').val());
-  const data = getFormData();
+  var idx = parseInt(editIndex.value);
+  var data = {
+    id:    inputId.value.trim(),
+    name:  inputName.value.trim(),
+    dob:   inputDob.value,
+    cls:   inputClass.value.trim(),
+    gpa:   parseFloat(inputGpa.value),
+    email: inputEmail.value.trim(),
+  };
 
   if (idx === -1) {
     students.push(data);
-    showThongBao(`Đã thêm sinh viên "${data.name}" thành công!`);
+    showThongBao('Đã thêm sinh viên "' + data.name + '"!');
   } else {
     students[idx] = data;
-    showThongBao(`Đã cập nhật thông tin "${data.name}"!`);
+    showThongBao('Đã cập nhật thông tin "' + data.name + '"!');
   }
 
   saveStudents();
