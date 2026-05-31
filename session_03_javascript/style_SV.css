@@ -1,0 +1,13 @@
+/* Bảng điểm cao / thấp */
+.table tbody tr.gpa-cao {
+  background-color: #d4edda;
+}
+
+.table tbody tr.gpa-thap {
+  background-color: #f8d7da;
+}
+
+/* Nút thao tác gọn hơn */
+.btn-sm {
+  white-space: nowrap;
+}

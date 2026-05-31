@@ -1,111 +1,3 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quản Lý Công Việc</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<style>
-  .task-done .task-title { text-decoration: line-through; color: #6c757d; }
-  .priority-cao   { border-left: 4px solid #dc3545; }
-  .priority-trung { border-left: 4px solid #ffc107; }
-  .priority-thap  { border-left: 4px solid #198754; }
-</style>
-</head>
-<body class="bg-light">
-
-<header>
-  <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background: rgb(215, 163, 221)">
-    <a class="navbar-brand fs-3 fw-bold" href="#">📋 Quản Lý Công Việc Cá Nhân</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="#khu-vuc-thong-ke">Bảng Công Việc</a></li>
-        <li class="nav-item"><a class="nav-link" href="https://github.com/Raph7626?tab=repositories">Git</a></li>
-      </ul>
-    </div>
-  </nav>
-</header>
-
-<div class="container py-4">
-
-  <!-- Thống kê -->
-  <div class="row mb-3" id="khu-vuc-thong-ke">
-    <div class="col-auto">
-      <span class="badge bg-secondary fs-6">Tổng: <strong id="stat-tong">0</strong></span>
-    </div>
-    <div class="col-auto">
-      <span class="badge bg-success fs-6">Hoàn thành: <strong id="stat-xong">0</strong></span>
-    </div>
-    <div class="col-auto">
-      <span class="badge bg-warning text-dark fs-6">Chưa xong: <strong id="stat-chua">0</strong></span>
-    </div>
-  </div>
-
-  <!-- Thông báo -->
-  <div id="thong-bao" class="alert d-none"></div>
-
-  <!-- Nút thêm -->
-  <div class="mb-3">
-    <button class="btn btn-primary" id="btn-mo-form">+ Thêm Công Việc</button>
-  </div>
-
-  <!-- Danh sách công việc -->
-  <div id="danh-sach"></div>
-
-</div>
-
-<!-- Modal thêm/sửa -->
-<div class="modal fade" id="modal-form" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modal-tieu-de">Thêm Công Việc</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-
-        <div class="mb-3">
-          <label class="form-label">Tiêu đề *</label>
-          <input type="text" id="f-title" class="form-control" placeholder="Tên công việc">
-          <div class="text-danger small mt-1" id="err-title"></div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Mô tả ngắn</label>
-          <textarea id="f-desc" class="form-control" rows="2" placeholder="Mô tả..."></textarea>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Hạn hoàn thành</label>
-          <input type="date" id="f-deadline" class="form-control">
-          <div class="text-danger small mt-1" id="err-deadline"></div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Mức ưu tiên</label>
-          <select id="f-priority" class="form-select">
-            <option value="cao">Cao</option>
-            <option value="trung" selected>Trung bình</option>
-            <option value="thap">Thấp</option>
-          </select>
-        </div>
-
-        <input type="hidden" id="f-edit-index" value="-1">
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-        <button class="btn btn-primary" id="btn-luu">Lưu</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-
 // ── LẤY CÁC PHẦN TỬ DOM ──
 var btnMoForm   = document.getElementById('btn-mo-form');
 var btnLuu      = document.getElementById('btn-luu');
@@ -220,16 +112,14 @@ function resetForm() {
 // ── VALIDATION ──
 function validate() {
   var hopLe = true;
-  errTitle.textContent = '';
+  errTitle.textContent    = '';
   errDeadline.textContent = '';
 
-  // Kiểm tra tiêu đề
   if (inputTitle.value.trim() === '') {
     errTitle.textContent = 'Vui lòng nhập tiêu đề công việc.';
     hopLe = false;
   }
 
-  // Kiểm tra hạn hoàn thành (không bắt buộc)
   if (inputDeadline.value !== '') {
     var homNay = new Date();
     homNay.setHours(0, 0, 0, 0);
@@ -316,7 +206,3 @@ btnLuu.addEventListener('click', function () {
 loadTasks();
 renderTasks();
 updateTaskSummary();
-
-</script>
-</body>
-</html>

@@ -1,0 +1,16 @@
+.task-done .task-title {
+  text-decoration: line-through;
+  color: #6c757d;
+}
+
+.priority-cao {
+  border-left: 4px solid #dc3545;
+}
+
+.priority-trung {
+  border-left: 4px solid #ffc107;
+}
+
+.priority-thap {
+  border-left: 4px solid #198754;
+}

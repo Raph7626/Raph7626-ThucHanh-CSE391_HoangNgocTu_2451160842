@@ -1,125 +1,3 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quản Lý Sinh Viên</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
-
-<header>
-  <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background: rgb(139, 230, 230)">
-    <a class="navbar-brand fs-3 fw-bold" href="#">🎓 Quản lý sinh viên</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="#khu-vuc-thong-ke">Bảng Sinh Viên</a></li>
-        <li class="nav-item"><a class="nav-link" href="https://github.com/Raph7626?tab=repositories">Git</a></li>
-      </ul>
-    </div>
-  </nav>
-</header>
-
-<div class="container py-4">
-
-  <!-- Thống kê -->
-  <div class="row mb-3" id="khu-vuc-thong-ke">
-    <div class="col-auto">
-      <span class="badge bg-primary fs-6">Tổng: <strong id="total-score">0</strong> sinh viên</span>
-    </div>
-    <div class="col-auto">
-      <span class="badge bg-success fs-6">Điểm TB lớp: <strong id="average-score">—</strong></span>
-    </div>
-  </div>
-
-  <!-- Thông báo -->
-  <div id="thong-bao" class="alert d-none"></div>
-
-  <!-- Nút thêm -->
-  <div class="mb-3">
-    <button class="btn btn-primary" id="btn-mo-form">+ Thêm Sinh Viên</button>
-  </div>
-
-  <!-- Bảng danh sách -->
-  <table class="table table-bordered table-hover bg-white">
-    <thead class="table-dark">
-      <tr>
-        <th>Mã SV</th>
-        <th>Họ và Tên</th>
-        <th>Ngày Sinh</th>
-        <th>Lớp</th>
-        <th>Điểm TB</th>
-        <th>Email</th>
-        <th>Thao Tác</th>
-      </tr>
-    </thead>
-    <tbody id="tbody"></tbody>
-  </table>
-
-</div>
-
-<!-- Modal thêm/sửa -->
-<div class="modal fade" id="modal-form" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modal-tieu-de">Thêm Sinh Viên</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-      <div class="modal-body">
-
-        <div class="mb-3">
-          <label class="form-label">Mã sinh viên *</label>
-          <input type="text" id="f-id" class="form-control" placeholder="VD: SV001">
-          <div class="text-danger small mt-1" id="err-id"></div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Họ và tên *</label>
-          <input type="text" id="f-name" class="form-control" placeholder="Nguyễn Văn A">
-          <div class="text-danger small mt-1" id="err-name"></div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Ngày sinh</label>
-          <input type="date" id="f-dob" class="form-control">
-          <div class="text-danger small mt-1" id="err-dob"></div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Lớp học *</label>
-          <input type="text" id="f-class" class="form-control" placeholder="VD: CNTT-K47">
-          <div class="text-danger small mt-1" id="err-class"></div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Điểm trung bình *</label>
-          <input type="number" id="f-gpa" class="form-control" placeholder="0 - 10" step="0.1" min="0" max="10">
-          <div class="text-danger small mt-1" id="err-gpa"></div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label">Email</label>
-          <input type="email" id="f-email" class="form-control" placeholder="example@email.com">
-          <div class="text-danger small mt-1" id="err-email"></div>
-        </div>
-
-        <input type="hidden" id="f-edit-index" value="-1">
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-        <button class="btn btn-primary" id="btn-luu">Lưu</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-
 // ── LẤY CÁC PHẦN TỬ DOM ──
 var btnMoForm   = document.getElementById('btn-mo-form');
 var btnLuu      = document.getElementById('btn-luu');
@@ -179,7 +57,9 @@ function renderStudents() {
   for (var i = 0; i < students.length; i++) {
     var s = students[i];
     var ngaySinh = s.dob ? new Date(s.dob).toLocaleDateString('vi-VN') : '—';
-    html += '<tr>';
+    var hangClass = s.gpa >= 8 ? 'gpa-cao' : (s.gpa < 5 ? 'gpa-thap' : '');
+
+    html += '<tr class="' + hangClass + '">';
     html += '<td>' + s.id + '</td>';
     html += '<td>' + s.name + '</td>';
     html += '<td>' + ngaySinh + '</td>';
@@ -232,7 +112,6 @@ function resetForm() {
   inputId.removeAttribute('readonly');
   modalTieuDe.textContent   = 'Thêm Sinh Viên';
   btnLuu.textContent        = 'Lưu';
-  // Xóa lỗi cũ
   errId.textContent    = '';
   errName.textContent  = '';
   errDob.textContent   = '';
@@ -244,7 +123,6 @@ function resetForm() {
 // ── VALIDATION ──
 function validate() {
   var hopLe = true;
-  // Xóa lỗi cũ
   errId.textContent = errName.textContent = errDob.textContent = '';
   errClass.textContent = errGpa.textContent = errEmail.textContent = '';
 
@@ -261,7 +139,6 @@ function validate() {
     errId.textContent = 'Vui lòng nhập mã sinh viên.';
     hopLe = false;
   } else if (!isEdit) {
-    // Kiểm tra trùng mã (chỉ khi thêm mới)
     for (var i = 0; i < students.length; i++) {
       if (students[i].id.toLowerCase() === id.toLowerCase()) {
         errId.textContent = 'Mã sinh viên đã tồn tại.';
@@ -277,7 +154,7 @@ function validate() {
     hopLe = false;
   }
 
-  // Ngày sinh (không bắt buộc)
+  // Ngày sinh
   if (dob !== '') {
     var ngaySinh = new Date(dob);
     var homNay = new Date();
@@ -302,7 +179,7 @@ function validate() {
     hopLe = false;
   }
 
-  // Email (không bắt buộc)
+  // Email
   if (email !== '') {
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
@@ -380,7 +257,3 @@ btnLuu.addEventListener('click', function () {
 loadStudents();
 renderStudents();
 updateStatistics();
-
-</script>
-</body>
-</html>
